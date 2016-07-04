@@ -1,4 +1,4 @@
-package hkl.hadoop.Adult;
+package hkl.hadoop.Adult;  
 
 import org.apache.hadoop.io.Text;
 

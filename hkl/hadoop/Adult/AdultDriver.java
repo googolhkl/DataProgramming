@@ -10,7 +10,7 @@ import org.apache.hadoop.mapreduce.lib.input.TextInputFormat;
 import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
 import org.apache.hadoop.mapreduce.lib.output.TextOutputFormat;
 
-public class AdultDriver 
+public class AdultDriver  
 {
 	public static void main(String[] args) throws Exception
 	{

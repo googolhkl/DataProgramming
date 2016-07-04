@@ -23,8 +23,11 @@ public class AdultMapper
 	{
 		AdultInformationParser parser = new AdultInformationParser(value);
 		
+        //outputKey 설정
 		outputKey.set(parser.getRace()+ "," + parser.getSex() + "," + parser.getHoursPerWeek());
-		if(parser.getPay().equals("<=50K"))
+
+        // 50K 이상 버는사람 출력
+		if(parser.getPay().equals("<=50K")) 
 		{
 			context.write(outputKey, outputValue);
 		}

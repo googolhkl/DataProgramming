@@ -22,5 +22,4 @@ public class AdultReducer
 		result.set(sum);
 		context.write(key, result);
 	}
-
 }
