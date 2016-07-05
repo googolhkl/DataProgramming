@@ -49,6 +49,7 @@ public class AdultInformationParser
 	}
 	//getter
 	public int getAge() { return age;}
+	public void setAge(int num) { age = num;}
 	public String getWorkClass() { return workClass;}
 	public String getEducation() {return education;}
 	public String getMaritalStatus() { return maritalStatus;}

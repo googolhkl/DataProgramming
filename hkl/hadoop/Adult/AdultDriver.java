@@ -29,8 +29,10 @@ public class AdultDriver
 		
 		job.setJarByClass(AdultDriver.class);
 		
+		System.out.println("Before Mapper Execute");
 		job.setMapperClass(AdultMapper.class);
-		
+		System.out.println("After Mapper Execute");
+
 		job.setReducerClass(AdultReducer.class);
 		
 		job.setInputFormatClass(TextInputFormat.class);
