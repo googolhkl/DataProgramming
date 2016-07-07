@@ -1,30 +1,17 @@
 package hkl.hadoop.Adult;
 
 import java.io.IOException;
-
 import org.apache.hadoop.io.IntWritable;
 import org.apache.hadoop.io.LongWritable;
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Mapper;
-
 import hkl.hadoop.Adult.AdultInformationParser;
-
-
 
 public class AdultOptionCountMapper
 	extends Mapper<LongWritable, Text, Text, IntWritable>
 {
-	// operating type
-	private String workType;
-	
 	private Text outputKey = new Text();
 	private final static IntWritable outputValue = new IntWritable(1);
-	
-	@Override
-	public void setup(Context context) throws IOException, InterruptedException
-	{
-		workType = context.getConfiguration().get("workType");
-	}
 	
 	public void map(LongWritable key, Text value,Context context)
 		throws IOException, InterruptedException
@@ -36,16 +23,16 @@ public class AdultOptionCountMapper
 		temp /= 10;
 		temp *= 10;
 		parser.setAge(temp);
-		outputKey.set(parser.getAge()+ "," + parser.getRace()+ "," + parser.getSex());
 
 		// income >= 50K
 		if(parser.getPay().equals("<=50K"))
 		{
-			//context.getCounter(AdultOption.age_between_70_100).increment(516);
-			if(workType.equals("age"))
+			if(parser.getSex().equals("Male"))
 			{
 				if( (parser.getAge() >= 20) && (parser.getAge() <50) ) //20~49
 				{
+					outputKey.set("M," + parser.getAge() + "," + parser.getRace() + 
+							"," + parser.getSex());
 					context.write(outputKey, outputValue);
 				}
 				else if( (parser.getAge() >=10) &&(parser.getAge() <20) ) //10~19
@@ -61,7 +48,7 @@ public class AdultOptionCountMapper
 					context.getCounter(AdultOption.age_between_70_100).increment(1);
 				}			
 			}
-			else if(workType.equals("hour"))
+			else if(parser.getSex().equals("Female"))
 			{
 				if( (parser.getHoursPerWeek() <10) ) // ~9
 				{
@@ -77,6 +64,8 @@ public class AdultOptionCountMapper
 				}
 				else if( (parser.getHoursPerWeek() >=30) && (parser.getHoursPerWeek() <50))
 				{
+					outputKey.set("F," + parser.getAge() + "," + parser.getRace() + ","
+					+ parser.getSex());
 					context.write(outputKey, outputValue);
 				}
 				else if( (parser.getHoursPerWeek() >=50) && (parser.getHoursPerWeek() <70))

@@ -13,6 +13,7 @@ import org.apache.hadoop.mapreduce.lib.output.TextOutputFormat;
 import org.apache.hadoop.util.GenericOptionsParser;
 import org.apache.hadoop.util.Tool;
 import org.apache.hadoop.util.ToolRunner;
+import org.apache.hadoop.mapreduce.lib.output.MultipleOutputs;
 
 public class AdultOptionCountDriver  extends Configured implements Tool
 {
@@ -48,6 +49,9 @@ public class AdultOptionCountDriver  extends Configured implements Tool
 		
 		job.setOutputKeyClass(Text.class);
 		job.setOutputValueClass(IntWritable.class);
+		
+		MultipleOutputs.addNamedOutput(job, "Male", TextOutputFormat.class, Text.class, IntWritable.class);
+		MultipleOutputs.addNamedOutput(job, "Female", TextOutputFormat.class, Text.class, IntWritable.class);
 		
 		job.waitForCompletion(true);
 		return 0;
