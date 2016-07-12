@@ -26,18 +26,21 @@ public class AdultPartialSortSearch extends Configured implements Tool
     public int run(String[] args) throws Exception
     {
         Path path = new Path(args[0]);
-        FileSystem fs = path.getFileSystem(getConf());
+        FileSystem fs = path.getFileSystem(getConf()); // 로컬파일or HDFS 사용시 반드시 FileSystem사용.
         
-        Reader[] readers = MapFileOutputFormat.getReaders(fs, path, getConf());
+        Reader[] readers = MapFileOutputFormat.getReaders(fs, path, getConf()); // 맵파일에 저장된 데이터 목록을 반환
         
         IntWritable key = new IntWritable();
-        key.set(Integer.parseInt(args[1]));
+        key.set(Integer.parseInt(args[1])); // 사용자가 입력한 근무시간을 키로 설정
 
         Text value = new Text();
 
+        // 해시 파티너를 생성하는 이유는 맵파일이 해시 파티셔너로 파티셔닝 됐기 때문
         Partitioner<IntWritable, Text> partitioner = new HashPartitioner<IntWritable, Text>();
+        // 특정 키에 대한 파티션 번호를 반환
         Reader reader = readers[partitioner.getPartition(key, value, readers.length)];
 
+        // 특정 키에 대한 값을 검색. 데이터 목록중에 첫 번째 값이다.
         Writable entry = reader.get(key, value);
         if(entry == null)
         {
@@ -45,7 +48,7 @@ public class AdultPartialSortSearch extends Configured implements Tool
         }
 
         IntWritable nextKey = new IntWritable();
-
+        // 맵파일에 있는 모든 데이터를 조회(사용자가 입력한 키와 같은 키만 출력)
         do
         {
             System.out.println(value.toString());
