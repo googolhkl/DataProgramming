@@ -7,16 +7,16 @@ public class AdultInformationParser
 	// field
 	private int age;					//use
 	private String workClass;    	//use
-	private int fnlwgt;
+	//private int fnlwgt;
 	private String education;		//use
-	private int educationNum;
+	//private int educationNum;
 	private String maritalStatus;	//use
 	private String occupation;		//use
-	private String relationship;
+	//private String relationship;
 	private String race;				//use
 	private String sex;				//use
-	private int capitalGain;
-	private int capitalLoss;
+	//private int capitalGain;
+	//private int capitalLoss;
 	private int hoursPerWeek;		//use
 	private String nativeCountry;	//use
 	private String pay;				//use	
